@@ -1,0 +1,24 @@
+server:
+  port: 8001 #服务器启动端口
+  servlet:
+    context-path: /mytest/
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource #配置数据源的类型
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/springcloud_db?useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.jdbc.Driver
+  application:
+    name: springboot001
+  mvc:
+    view:
+      prefix: /page/
+      suffix: .html
+#  resources:
+#    static-locations: classpath:static/*.html
+mybatis:
+  type-aliases-package: com.example.springboot001demo.pojo
+  mapper-locations: classpath:mybatis/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot001demo.mapper.UserMapper">
+
+    <select id="login" parameterType="User" resultType="User">
+        select * from user where username=#{username} and password=#{password}
+    </select>
+
+    <select id="getUsersByName" parameterType="String" resultType="User">
+        select  *  from user where username like '%${username}%'
+    </select>
+
+    <select id="getUsersByWhere" parameterType="map" resultType="User">
+          select  *  from user where username like '%${username}%' and  id > #{id}
+</select>
+
+
+    <select id="getUsersByWhere2" parameterType="map" resultType="User">
+        select * from user
+        <where>
+            <if test="username!=null and username!=''">
+                username like '%${username}%'
+            </if>
+            <if test="id!=null and id!=''">
+                and id >#{id}
+            </if>
+        </where>
+        limit #{pageStart},#{pageEnd}
+    </select>
+    <delete id="deleteUserById" parameterType="Integer">
+       delete from user where id=#{id}
+    </delete>
+    <update id="updateUserById" parameterType="User">
+        update user set username=#{username} where id=#{id}
+    </update>
+
+    <!--用户注册逻辑-->
+    <insert id="registerUser" parameterType="User">
+        insert into user value (#{id},#{username},#{db_source},#{password})
+    </insert>
+
+    <delete id="deleteUsers" parameterType="list">
+        delete from user where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <update id="updateUser" parameterType="user">
+        update user set username=#{username},password=#{password} where id=#{id}
+    </update>
+
+</mapper>
